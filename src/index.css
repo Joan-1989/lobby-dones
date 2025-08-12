@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide Google Translate original UI elements */
+.goog-te-banner-frame.skiptranslate { display: none !important; } 
+body { top: 0px !important; }
+.notranslate {
+    pointer-events: none;
+}
+
+/* Custom styles for imported WordPress content */
+.prose-styling h1, .prose-styling h2, .prose-styling h3, .prose-styling h4, .prose-styling h5, .prose-styling h6 {
+    font-family: 'Titillium Web', sans-serif;
+    color: #401f6e; /* neutral-text */
+    font-weight: 700;
+    margin-bottom: 0.75em;
+    margin-top: 1.5em;
+}
+.prose-styling h1 { font-size: 2rem; }
+.prose-styling h2 { font-size: 1.75rem; }
+.prose-styling h3 { font-size: 1.5rem; }
+.prose-styling h4 { font-size: 1.25rem; }
+.prose-styling p {
+    font-family: 'Anek Bangla', sans-serif;
+    color: #5a4e7a; /* neutral-text-subtle */
+    line-height: 1.75;
+    margin-bottom: 1.25em;
+}
+.prose-styling a {
+    color: #cd147d; /* accent */
+    text-decoration: underline;
+    transition: color 150ms ease-in-out;
+}
+.prose-styling a:hover {
+    color: #8014cc; /* secondary */
+}
+.prose-styling ul, .prose-styling ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1.25em;
+    color: #5a4e7a;
+}
+.prose-styling ul { list-style-type: disc; }
+.prose-styling ol { list-style-type: decimal; }
+.prose-styling li { margin-bottom: 0.5em; }
+.prose-styling strong {
+    font-weight: 600;
+    color: #401f6e;
+}
+.prose-styling img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.prose-styling iframe {
+    max-width: 100%;
+    border-radius: 0.5rem;
+}

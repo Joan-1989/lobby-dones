@@ -1,81 +1,172 @@
-import React, { useState } from 'react';
-import LanguageSwitcher from './LanguageSwitcher';
-import Logo from './Logo';
+// src/components/Header.tsx
 
-const NavLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
-  <a href={href} className="text-neutral-text hover:text-primary transition-colors duration-fast ease-in-out text-base font-medium relative group">
-    {children}
-    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-normal group-hover:w-full"></span>
-  </a>
-);
+import React, { useState, useEffect } from 'react';
 
-const ActionButton: React.FC<{ href: string; children: React.ReactNode; primary?: boolean }> = ({ href, children, primary = false }) => (
-  <a
-    href={href}
-    className={`
-      ${primary ? 'bg-accent hover:bg-accent/90 text-white' : 'bg-primary/10 hover:bg-primary/20 text-primary-dark'}
-      font-semibold py-2 px-5 rounded-lg
-      transition-all duration-normal ease-in-out transform hover:scale-105
-    `}
-  >
-    {children}
-  </a>
-);
+// SOLUCIÓ ALTERNATIVA:
+// Per evitar els errors d'importació, he mogut el codi dels components
+// 'Logo' i 'LanguageSwitcher' directament a dins d'aquest arxiu.
+// Això no és l'ideal per a organitzar un projecte gran, però ens permetrà
+// superar l'error de configuració i continuar amb el disseny.
+
+const Logo: React.FC = () => {
+  return (
+    <img 
+      src="https://cdn.prod.website-files.com/6895f3040c1b084e5c2a263b/6897120fd7fe900272a8abb9_LOGO%20LOBBY.jpg" 
+      alt="Lobby Dones Logo"
+      className="h-10 w-auto"
+    />
+  );
+};
+
+const LanguageSwitcher: React.FC = () => {
+  // Aquesta és una versió simplificada. La pots expandir amb la lògica del menú desplegable.
+  return (
+    <div className="relative">
+       <button className="flex items-center text-sm font-medium text-gray-600 hover:text-purple-600">
+         <span>CA</span>
+         <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+       </button>
+    </div>
+  );
+};
 
 
+// Component principal del Header
 const Header: React.FC = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
+  const navLinks = [
+    { name: 'Qui som', href: '#quisom' },
+    { name: 'Àmbits d\'actuació', href: '#ambits' },
+    { name: 'Recursos', href: '#recursos' },
+    { name: 'Actualitat', href: '#actualitat' },
+  ];
 
   return (
-    <header className="bg-neutral-light/80 backdrop-blur-lg sticky top-0 z-50 border-b border-neutral-border">
-      <div className="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-        <Logo />
-        
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-x-8">
-          <NavLink href="#about">Qui som</NavLink>
-          <NavLink href="#projects">Projectes</NavLink>
-          <NavLink href="#news">Actualitat</NavLink>
-          <NavLink href="#contact">Contacte</NavLink>
-        </nav>
-        <div className="hidden lg:flex items-center gap-x-4">
-            <LanguageSwitcher />
-            <ActionButton href="#">Fes-te Sòcia</ActionButton>
-            <ActionButton href="#" primary>Fes una Donació</ActionButton>
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 md:px-10 shadow-sm">
+        <div className="flex items-center">
+          <a href="/" aria-label="Pàgina d'inici">
+            <Logo />
+          </a>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="lg:hidden text-primary"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Obrir menú"
-          aria-expanded={isMobileMenuOpen}
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-            </svg>
-        </button>
-      </div>
+        <nav className="hidden md:flex items-center gap-6">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="text-sm font-medium text-gray-600 hover:text-purple-600 transition-colors"
+            >
+              {link.name}
+            </a>
+          ))}
+        </nav>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden bg-neutral-light/95 backdrop-blur-sm pb-8 px-6 absolute w-full shadow-lg">
-          <nav className="flex flex-col items-center gap-y-6 pt-6">
-            <NavLink href="#about">Qui som</NavLink>
-            <NavLink href="#projects">Projectes</NavLink>
-            <NavLink href="#news">Actualitat</NavLink>
-            <NavLink href="#contact">Contacte</NavLink>
-            <div className="mt-4">
-              <LanguageSwitcher />
-            </div>
-            <div className="flex flex-col items-stretch w-full gap-y-4 pt-4">
-                <ActionButton href="#">Fes-te Sòcia</ActionButton>
-                <ActionButton href="#" primary>Fes una Donació</ActionButton>
-            </div>
+        <div className="hidden md:flex items-center gap-4">
+          <LanguageSwitcher />
+          <a
+            href="#implicathi"
+            className="bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg text-sm hover:bg-purple-700 transition-colors"
+          >
+            Implica-t'hi
+          </a>
+        </div>
+
+        <div className="md:hidden">
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            aria-label="Obrir menú"
+            className="p-2 rounded-md text-gray-700 hover:bg-gray-100"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      {/* Menú lateral per a mòbils */}
+      <div
+        className={`fixed inset-0 z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+          isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50" 
+          onClick={() => setIsMenuOpen(false)}
+        ></div>
+        
+        <div className="relative z-10 h-full w-4/5 max-w-sm bg-white p-6 shadow-xl">
+          <div className="flex items-center justify-between mb-8">
+            <Logo />
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              aria-label="Tancar menú"
+              className="p-2 rounded-md text-gray-700 hover:bg-gray-100"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <nav className="flex flex-col gap-6">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="text-lg font-medium text-gray-700 hover:text-purple-600"
+              >
+                {link.name}
+              </a>
+            ))}
+            <hr className="my-4"/>
+            <LanguageSwitcher />
+            <a
+              href="#implicathi"
+              onClick={() => setIsMenuOpen(false)}
+              className="mt-4 w-full text-center bg-purple-600 text-white font-semibold py-3 px-5 rounded-lg hover:bg-purple-700 transition-colors"
+            >
+              Implica-t'hi
+            </a>
           </nav>
         </div>
-      )}
-    </header>
+      </div>
+    </>
   );
 };
 

@@ -1,9 +1,12 @@
+
 import React from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
+import QuoteSection from './components/QuoteSection';
 import InfoCardsSection from './components/InfoCardsSection';
 import NewsSection from './components/NewsSection';
 import Footer from './components/Footer';
+
 
 const App: React.FC = () => {
   return (
@@ -11,6 +14,7 @@ const App: React.FC = () => {
       <Header />
       <main className="flex-grow">
         <HeroSection />
+        <QuoteSection />
         <InfoCardsSection />
         <NewsSection />
       </main>

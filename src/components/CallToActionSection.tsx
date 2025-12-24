@@ -22,6 +22,7 @@ const CallToActionSection: React.FC<CallToActionSectionProps> = ({ onNavigate })
                 </h2>
                 <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-10">
                     La teva implicació és clau per aconseguir una societat més justa i igualitària.
+                    <br />
                     Fes-te sòcia, col·labora o fes un donatiu.
                 </p>
 

@@ -256,7 +256,7 @@ const HomePage: React.FC<{ onNavigate: (page: string) => void }> = ({ onNavigate
             New structure: Hero(updated) -> Objectives (replaces Testimonials) -> Recognitions (pre-News) -> News -> CTA (end).
             I will remove QuoteSection as it wasn't mentioned but it seems redundant with the new text in Hero.
         */}
-    <ObjectivesSection />
+    <ObjectivesSection onNavigate={onNavigate} />
     <RecognitionsSection />
     <NewsSection />
     <CallToActionSection onNavigate={onNavigate} />

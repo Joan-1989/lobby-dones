@@ -1,7 +1,11 @@
 import React from 'react';
 import { objectives } from '../data/objectives';
 
-const ObjectivesSection: React.FC = () => {
+interface ObjectivesSectionProps {
+    onNavigate: (page: string) => void;
+}
+
+const ObjectivesSection: React.FC<ObjectivesSectionProps> = ({ onNavigate }) => {
     return (
         <section className="relative bg-white py-24 sm:py-32 overflow-hidden">
             {/* Background decorative element */}
@@ -14,12 +18,9 @@ const ObjectivesSection: React.FC = () => {
             <div className="relative container mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Objectius</h2>
-                    <p className="mt-4 text-lg text-gray-600">
-                        La nostra missió es concreta en aquests eixos fonamentals d'actuació.
-                    </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
                     {objectives.map((obj) => (
                         <div key={obj.id} className="bg-gray-50 border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center text-center">
                             <div className="flex items-center justify-center h-16 w-16 rounded-full bg-purple-100 text-purple-600 mb-6">
@@ -44,6 +45,19 @@ const ObjectivesSection: React.FC = () => {
                             <p className="text-gray-600">{obj.description}</p>
                         </div>
                     ))}
+                </div>
+
+                <div className="flex justify-center">
+                    <a
+                        href="#"
+                        onClick={(e) => { e.preventDefault(); onNavigate('ambits'); }}
+                        className="bg-purple-100 text-purple-700 hover:bg-purple-200 font-semibold py-3 px-8 rounded-lg shadow-sm transition-colors duration-300 flex items-center gap-2"
+                    >
+                        Descobreix què fem
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
                 </div>
             </div>
         </section>
